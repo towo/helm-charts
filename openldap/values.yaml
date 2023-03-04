@@ -29,9 +29,16 @@ existingSecret: ""
 tls:
   enabled: false
   secret: ""  # The name of a kubernetes.io/tls type secret to use for TLS
-  CA:
+  # Custom CA certificates to use
+  CA: 
+    # Enable custom CA certificates
     enabled: false
-    secret: ""  # The name of a generic secret to use for custom CA certificate (ca.crt)
+    # Whether to use a secret or a configmap
+    type: 'secret'
+    # Name of the resource (formerly `tls.CA.secret`)
+    resource: ""
+    # Secret key or configmap file to use
+    name: "ca.crt"
 ## Add additional labels to all resources
 extraLabels: {}
 ## Add additional annotations to pods

@@ -65,7 +65,7 @@ spec:
       {{- if .Values.tls.CA.enabled }}
       - name: {{ .Chart.Name }}-init-catls
         image: busybox
-        command: ['sh', '-c', 'cp /catls/ca.crt /certs']
+        command: ['sh', '-c', "cp /catls/{{ $.Values.tls.CA.name }} /certs"] # TODO: what
         volumeMounts:
           - name: catls
             mountPath: /catls
@@ -118,7 +118,7 @@ spec:
               value: tls.key
           {{- if .Values.tls.CA.enabled }}
             - name: LDAP_TLS_CA_CRT_FILENAME
-              value: ca.crt
+              value: {{ .Values.tls.CA.name }} 
           {{- end }}
           {{- end }}
           livenessProbe:
@@ -160,9 +160,17 @@ spec:
           secret:
             secretName: {{ .Values.tls.secret }}
         {{- if .Values.tls.CA.enabled }}
+        {{- if eq .Values.tls.CA.type "secret" }}
         - name: catls
           secret:
-            secretName: {{ .Values.tls.CA.secret }}
+            secretName: {{ .Values.tls.CA.resource }}
+        {{- else if eq .Values.tls.CA.type "configmap" }}
+        - name: catls
+          configMap:
+            name: {{ .Values.tls.CA.resource }}
+        {{- else }}
+        # Input validation should have told you to use either `secret` or `configmap` for `tls.CA.type`
+        {{- end }}
         {{- end }}
         {{- end }}
         - name: certs

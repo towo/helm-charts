@@ -55,7 +55,9 @@ The following table lists the configurable parameters of the openldap chart and 
 | `tls.enabled`                      | Set to enable TLS/LDAPS - should also set `tls.secret`                                                                                    | `false`             |
 | `tls.secret`                       | Secret containing TLS cert and key (eg, generated via cert-manager)                                                                       | `""`                |
 | `tls.CA.enabled`                   | Set to enable custom CA crt file - should also set `tls.CA.secret`                                                                        | `false`             |
-| `tls.CA.secret`                    | Secret containing CA certificate (ca.crt)                                                                                                 | `""`                |
+| `tls.CA.type`                      | Type of the TLS CA credentials to use — secret or configmap.                                                                              | `secret`            |
+| `tls.CA.resource`                  | Name of the resource containing the CA certificate                                                                                        | `""`                |
+| `tls.CA.name`                      | Name of the secret or file containing the CA certificate                                                                                  | `ca.crt`            |
 | `adminPassword`                    | Password for admin user. Unset to auto-generate the password                                                                              | None                |
 | `configPassword`                   | Password for config user. Unset to auto-generate the password                                                                             | None                |
 | `customLdifFiles`                  | Custom ldif files to seed the LDAP server. List of filename -> data pairs                                                                 | None                |
