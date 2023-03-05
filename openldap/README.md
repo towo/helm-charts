@@ -1,13 +1,6 @@
-# ⚠️ Repo Archive Notice
-
-As of Nov 13, 2020, charts in this repo will no longer be updated.
-For more information, see the Helm Charts [Deprecation and Archive Notice](https://github.com/helm/charts#%EF%B8%8F-deprecation-and-archive-notice), and [Update](https://helm.sh/blog/charts-repo-deprecation/).
-
 # OpenLDAP Helm Chart
 
-## DEPRECATION NOTICE
-
-This chart is deprecated and no longer supported.
+This chart has been adapted from the legacy stable repository.
 
 ## Prerequisites Details
 * Kubernetes 1.8+
@@ -37,13 +30,13 @@ The following table lists the configurable parameters of the openldap chart and 
 | `replicaCount`                     | Number of replicas                                                                                                                        | `1`                 |
 | `strategy`                         | Deployment strategy                                                                                                                       | `{}`                |
 | `image.repository`                 | Container image repository                                                                                                                | `osixia/openldap`   |
-| `image.tag`                        | Container image tag                                                                                                                       | `1.1.10`            |
+| `image.tag`                        | Container image tag                                                                                                                       | `1.5.0`             |
 | `image.pullPolicy`                 | Container pull policy                                                                                                                     | `IfNotPresent`      |
 | `extraLabels`                      | Labels to add to the Resources                                                                                                            | `{}`                |
 | `podAnnotations`                   | Annotations to add to the pod                                                                                                             | `{}`                |
 | `existingSecret`                   | Use an existing secret for admin and config user passwords                                                                                | `""`                |
 | `service.annotations`              | Annotations to add to the service                                                                                                         | `{}`                |
-| `service.clusterIP`                | IP address to assign to the service                                                                                                       | `nil`                |
+| `service.clusterIP`                | IP address to assign to the service                                                                                                       | `nil`               |
 | `service.externalIPs`              | Service external IP addresses                                                                                                             | `[]`                |
 | `service.ldapPort`                 | External service port for LDAP                                                                                                            | `389`               |
 | `service.loadBalancerIP`           | IP address to assign to load balancer (if supported)                                                                                      | `""`                |
