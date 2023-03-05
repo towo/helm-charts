@@ -42,6 +42,8 @@ service:
 
 ingress:
   enabled: false
+  # Defines an `Ingress.spec.ingressClassName`. Consider using it, as the annotation usage is considered deprecated.
+  # className: ''
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
