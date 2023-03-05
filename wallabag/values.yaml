@@ -1,7 +1,5 @@
-# Default values for wallabag.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
+---
+# Default Helm values for wallabag.
 replicaCount: 1
 
 image:
