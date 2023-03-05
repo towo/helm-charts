@@ -1,0 +1,24 @@
+{{- if .Values.sqlite.persistence.enabled }}
+{{- $fullName := include "wallabag.fullname" . -}}
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ $fullName }}
+  annotations:
+    helm.sh/resource-policy: keep
+  labels:
+    {{- include "wallabag.labels" . | nindent 4 }}
+spec:
+  accessModes: 
+    - {{ .Values.sqlite.persistence.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.sqlite.persistence.size }}
+  {{- if .Values.sqlite.persistence.storageClass }}
+    {{- if eq "-" .Values.sqlite.persistence.storageClass }}
+  storageClassName: ""
+    {{- else }}
+  storageClassName: {{ .Values.sqlite.persistence.storageClass }}
+    {{- end }}
+  {{- end }}
+{{- end }}

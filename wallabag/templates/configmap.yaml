@@ -1,0 +1,137 @@
+{{- $fullName := include "wallabag.fullname" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "wallabag.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+data:
+  {{- if .Values.wallabag.database.env }}
+  {{- if .Values.wallabag.database.env.charset }}
+  SYMFONY__ENV__DATABASE_CHARSET: {{ .Values.wallabag.database.env.charset | quote }}
+  {{- end }}
+  {{- if .Values.wallabag.database.env.driver }}
+  SYMFONY__ENV__DATABASE_DRIVER: {{ .Values.wallabag.database.env.driver | quote }}
+  {{- end }}
+  {{- if .Values.wallabag.database.env.host }}
+  SYMFONY__ENV__DATABASE_HOST: {{ .Values.wallabag.database.env.host | quote }}
+  {{- end }}
+  {{- if .Values.wallabag.database.env.name }}
+  SYMFONY__ENV__DATABASE_NAME: {{ .Values.wallabag.database.env.name | quote }}
+  {{- end }}
+  {{- if .Values.wallabag.database.env.password }}
+  SYMFONY__ENV__DATABASE_PASSWORD: {{ .Values.wallabag.database.env.password | quote }}
+  {{- end }}
+  {{- if .Values.wallabag.database.env.port }}
+  SYMFONY__ENV__DATABASE_PORT: {{ .Values.wallabag.database.env.port | quote }}
+  {{- end }}
+  {{- if .Values.wallabag.database.env.user }}
+  SYMFONY__ENV__DATABASE_USER: {{ .Values.wallabag.database.env.user | quote }}
+  {{- end }}
+  {{- end }}
+  {{- if .Values.wallabag.database.populate }}
+  POPULATE_DATABASE: "True"
+  {{- else }}
+  {{- if hasKey .Values.wallabag.database "populate" }}
+  POPULATE_DATABASE: "false"
+  {{- end }}
+  {{- end }}
+
+  {{- if .Values.wallabag.twofactor.auth }}
+  SYMFONY__ENV__TWOFACTOR_AUTH: "true"
+  {{- else }}
+  {{- if hasKey .Values.wallabag.twofactor "auth" }}
+  SYMFONY__ENV__TWOFACTOR_AUTH: "false"
+  {{- end }}
+  {{- end }}
+
+  {{- if .Values.wallabag.twofactor.sender }}
+  SYMFONY__ENV__TWOFACTOR_SENDER: {{ .Values.wallabag.twofactor.sender | quote }}
+  {{- end }}
+ 
+  {{- if .Values.wallabag.fosuser.confirmation }}
+  SYMFONY__ENV__FOSUSER_CONFIRMATION: "true"
+  {{- else }}
+  {{- if hasKey .Values.wallabag.fosuser "confirmation" }}
+  SYMFONY__ENV__FOSUSER_CONFIRMATION: "false"
+  {{- end }}
+  {{- end }}
+
+  {{- if .Values.wallabag.fosuser.registration }}
+  SYMFONY__ENV__FOSUSER_REGISTRATION: "true"
+  {{- else }}
+  {{- if hasKey .Values.wallabag.fosuser "registration" }}
+  SYMFONY__ENV__FOSUSER_REGISTRATION: "false"
+  {{- end }}
+  {{- end }}
+ 
+  {{- if .Values.wallabag.mailer }}
+  {{- if .Values.wallabag.mailer.host }}
+  SYMFONY__ENV__MAILER_HOST: {{ .Values.wallabag.mailer.host | quote }}
+  {{- end }}
+  {{- if .Values.wallabag.mailer.password }}
+  SYMFONY__ENV__MAILER_PASSWORD: {{ .Values.wallabag.mailer.password | quote }}
+  {{- end }}
+  {{- if .Values.wallabag.mailer.user }}
+  SYMFONY__ENV__MAILER_USER: {{ .Values.wallabag.mailer.user | quote }}
+  {{- end }}
+  {{- end -}}
+
+  {{- if .Values.wallabag.redis }}
+  {{- if .Values.wallabag.redis.host }}
+  SYMFONY__ENV__REDIS_HOST: {{ .Values.wallabag.redis.host | quote }}
+  {{- end }}
+  {{- if .Values.wallabag.redis.password }}
+  SYMFONY__ENV__REDIS_PASSWORD: {{ .Values.wallabag.redis.password | quote }}
+  {{- end }}
+  {{- if .Values.wallabag.redis.path }}
+  SYMFONY__ENV__REDIS_PATH: {{ .Values.wallabag.redis.path | quote }}
+  {{- end }}
+  {{- if .Values.wallabag.redis.port }}
+  SYMFONY__ENV__REDIS_PORT: {{ .Values.wallabag.redis.port | quote }}
+  {{- end }}
+  {{- if .Values.wallabag.redis.scheme }}
+  SYMFONY__ENV__REDIS_SCHEME: {{ .Values.wallabag.redis.scheme | quote }}
+  {{- end }}
+  {{- end -}}
+ 
+  {{- if .Values.wallabag }}
+  {{- if .Values.wallabag.mysql_root_password }}
+  MYSQL_ROOT_PASSWORD: {{ .Values.wallabag.mysql_root_password | quote }}
+  {{- end }}
+ 
+  {{- if .Values.wallabag.postgresql_admin_password }}
+  POSTGRES_PASSWORD: {{ .Values.wallabag.postgresql_admin_password | quote }}
+  {{- end }}
+  {{- if .Values.wallabag.postgresql_admin_user }}
+  POSTGRES_USER: {{ .Values.wallabag.postgresql_admin_user | quote }}
+  {{- end }}
+  
+  {{- if .Values.wallabag.domain_name }}
+  SYMFONY__ENV__DOMAIN_NAME: {{ .Values.wallabag.domain_name | quote }}
+  {{- end }}
+ 
+  {{- if .Values.wallabag.from_email }}
+  SYMFONY__ENV__FROM_EMAIL: {{ .Values.wallabag.from_email | quote }}
+  {{- end }}
+  
+  {{- if .Values.wallabag.locale }}
+  SYMFONY__ENV__LOCALE: {{ .Values.wallabag.locale | quote }}
+  {{- end }}
+
+  {{- if .Values.wallabag.secret }}
+  SYMFONY__ENV__SECRET: {{ .Values.wallabag.secret | quote }}
+  {{- end }}
+  
+  {{- if .Values.wallabag.sentry_dsn }}
+  SYMFONY__ENV__SENTRY_DSN: {{ .Values.wallabag.sentry_dsn | quote }}
+  {{- end }}
+  
+  {{- if .Values.wallabag.server_name }}
+  SYMFONY__ENV__SERVER_NAME: {{ .Values.wallabag.server_name | quote }}
+  {{- end }}
+  {{- end -}}
