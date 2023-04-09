@@ -10,6 +10,9 @@ spec:
 {{- end }}
   selector:
     matchLabels:
+      app.kubernetes.io/name: {{ include "wallabag.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: 'app'
       {{- include "wallabag.selectorLabels" . | nindent 6 }}
   template:
     metadata:
@@ -18,6 +21,9 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
+        app.kubernetes.io/name: {{ include "wallabag.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/component: 'app'
         {{- include "wallabag.selectorLabels" . | nindent 8 }}
     spec:
     {{- with .Values.imagePullSecrets }}
