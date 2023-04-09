@@ -104,6 +104,8 @@ wallabag:
     # password: "~"
     # user: "~"
   # redis:
+      # builtIn:
+        # enabled: false
       # host: "redis"
       # password: "~"
       # path: "~"
@@ -139,6 +141,12 @@ sqlite:
       #servicePort: 5432
   # persistence:
     # size: 5Gi
+
+# redis:
+#   enabled: false
+#   auth:
+#     enabled: true
+#     password: 'changeme'
 
 # mariadb:
   # auth:

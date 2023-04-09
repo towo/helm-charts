@@ -82,6 +82,14 @@ data:
   {{- end -}}
 
   {{- if .Values.wallabag.redis }}
+  {{- if .Values.wallabag.redis.builtIn.enabled }}
+  SYMFONY__ENV__REDIS_HOST: "{{ template "wallabag.redis.fullname" . }}-master"
+  {{- if .Values.redis.auth.enabled }}
+  SYMFONY__ENV__REDIS_PASSWORD: {{ .Values.redis.auth.password | quote }}
+  {{- end }}
+  SYMFONY__ENV__REDIS_PORT: {{ .Values.redis.master.service.ports.redis | quote }}
+  SYMFONY__ENV__REDIS_SCHEME: "tcp"
+  {{- else }}
   {{- if .Values.wallabag.redis.host }}
   SYMFONY__ENV__REDIS_HOST: {{ .Values.wallabag.redis.host | quote }}
   {{- end }}
@@ -96,6 +104,7 @@ data:
   {{- end }}
   {{- if .Values.wallabag.redis.scheme }}
   SYMFONY__ENV__REDIS_SCHEME: {{ .Values.wallabag.redis.scheme | quote }}
+  {{- end }}
   {{- end }}
   {{- end -}}
  

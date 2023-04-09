@@ -14,9 +14,13 @@ maintainers:
 dependencies:
 - name: postgresql
   repository: https://charts.bitnami.com/bitnami
-  version: 9.7.2
+  version: 12.2.2
   condition: wallabag.database.builtIn.postgresql.enabled
 - name: mariadb
   repository: https://charts.bitnami.com/bitnami
-  version: 8.0.0
+  version: 11.5.1
   condition: wallabag.database.builtIn.mariadb.enabled
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 17.9.3
+  condition: wallabag.redis.builtIn.enabled
