@@ -32,6 +32,9 @@ data:
   {{- if .Values.wallabag.database.env.user }}
   SYMFONY__ENV__DATABASE_USER: {{ .Values.wallabag.database.env.user | quote }}
   {{- end }}
+  {{- if and (hasKey .Values.wallabag.database.env "table_prefix") (not (kindIs "invalid" .Values.wallabag.database.env.table_prefix)) }}
+  SYMFONY__ENV__DATABASE_TABLE_PREFIX: {{ .Values.wallabag.database.env.table_prefix | quote }}
+  {{- end }}
   {{- end }}
   {{- if .Values.wallabag.database.populate }}
   POPULATE_DATABASE: "True"
