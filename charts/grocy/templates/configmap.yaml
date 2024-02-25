@@ -1,0 +1,9 @@
+{{- $fullName := include "grocy.fullname" . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "grocy.labels" . | nindent 4 }}
+data:
+  {{- toYaml .Values.grocy.env | nindent 2 }}

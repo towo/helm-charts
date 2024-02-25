@@ -1,37 +1,88 @@
-# FIXME this is still more or less from the k8s-at-home chart and I'm bumping this to check out the releaser action
-
+---
 image:
-  # -- image repository
-  repository: linuxserver/grocy
+  # Base repository for the images
+  repository:
+    backend: 'grocy/backend'
+    frontend: 'grocy/frontend'
+  # front- and backend name override
+  # frontend: 
+  # backend
   # -- image tag
   # @default -- chart.appVersion
-  tag:
+  # tag: 
   # -- image pull policy
-  pullPolicy: IfNotPresent
+  pullPolicy: 'IfNotPresent'
 
-# -- environment variables. See more environment variables in the [grocy documentation](https://github.com/linuxserver/docker-grocy#parameters).
-# @default -- See below
-env:
-  # -- Set the container timezone
-  TZ: UTC
-  # -- Set the container user id
-  PUID: "1000"
-  # -- Set the container group id
-  PGID: "1000"
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+replicaCount: 1
 
-# -- Configures service settings for the chart.
-# @default -- See values.yaml
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: "grocy"
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# Frontend service
 service:
-  main:
-    ports:
-      http:
-        port: 80
+  annotations: {}
+  # clusterIP: 
+  # loadbalancerIP: 
+  # nodePort: 
+  type: ClusterIP
+  port: 8080
 
 ingress:
-  # -- Enable and configure ingress settings for the chart under this key.
-  # @default -- See values.yaml
-  main:
-    enabled: false
+  enabled: false
+  # Defines an `Ingress.spec.ingressClassName`. Consider using it, as the annotation usage is considered deprecated.
+  # className: ''
+  annotations: {}
+  hosts:
+    - host: your-grocy-instance.example.com
+      paths: []
+  tls: []
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
 
 # -- Configure persistence settings for the chart under this key.
 # @default -- See values.yaml
@@ -43,5 +94,52 @@ persistence:
   # manually clearing the directory
   viewcache:
     enabled: true
-    type: emptyDir
-    mountPath: /config/data/viewcache
+    type: 'emptyDir'
+    mountPath: '/config/data/viewcache'
+# TODO: Look into the above
+
+grocy:
+  # Just dump all the configuration variables here. cf:
+  # https://github.com/grocy/grocy-docker/blob/main/grocy.env
+  # i.e. all settings from https://github.com/grocy/grocy/blob/master/config-dist.php prefixed
+  # with `GROOCY_`
+  env:
+    GROCY_CULTURE: 'en'
+    # These are the default variables as per the above-mentioned `grocy.env`
+    MAX_UPLOAD: '50M'
+    PHP_MAX_FILE_UPLOAD: '200'
+    PHP_MAX_POST: '100M'
+    PHP_MEMORY_LIMIT: '512M'
+
+# Grocy only supports the integrated SQLite persistence
+sqlite:
+  persistence:
+    # Setting this to false is only a good idea if you always want to lose your data.
+    enabled: true
+    size: 3Gi
+    accessMode: ReadWriteOnce
+    # storageClass: ""
+    # existingClaim: ""
+
+livenessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+  successThreshold: 1
+startupProbe:
+  enabled: true
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 30
+  successThreshold: 1
+
