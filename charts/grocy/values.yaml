@@ -1,9 +1,4 @@
-#
-# IMPORTANT NOTE
-#
-# This chart inherits from our common library chart. You can check the default values/options here:
-# https://github.com/k8s-at-home/library-charts/tree/main/charts/stable/common/values.yaml
-#
+# FIXME this is still more or less from the k8s-at-home chart and I'm bumping this to check out the releaser action
 
 image:
   # -- image repository
