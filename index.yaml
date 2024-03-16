@@ -30,6 +30,26 @@ entries:
     - https://github.com/towo/helm-charts/releases/download/grocy-8.5.3/grocy-8.5.3.tgz
     version: 8.5.3
   - apiVersion: v2
+    appVersion: 4.2.0
+    created: "2024-03-16T16:19:31.67333649Z"
+    description: ERP beyond your fridge - grocy is a web-based self-hosted groceries
+      & household management solution for your home
+    digest: 7c9969069c36f0db1d1df64bb70473330bd9947c112411d8b11aff41127f70e8
+    home: https://github.com/towo/helm-charts/
+    icon: https://github.com/grocy/grocy/raw/master/public/img/appicons/mstile-150x150.png
+    keywords:
+    - grocy
+    kubeVersion: '>=1.16.0-0'
+    maintainers:
+    - name: Tobias Wolter
+    name: grocy
+    sources:
+    - https://github.com/grocy/grocy
+    - https://github.com/grocy/grocy-docker
+    urls:
+    - https://github.com/towo/helm-charts/releases/download/grocy-0.1.0/grocy-0.1.0.tgz
+    version: 0.1.0
+  - apiVersion: v2
     appVersion: 3.3.2
     created: "2024-03-16T15:42:56.292839199Z"
     description: ERP beyond your fridge - grocy is a web-based self-hosted groceries
@@ -149,4 +169,4 @@ entries:
     urls:
     - https://github.com/towo/helm-charts/releases/download/grocy-0.0.1/grocy-0.0.1.tgz
     version: 0.0.1
-generated: "2024-03-16T15:42:56.292866359Z"
+generated: "2024-03-16T16:19:31.673366956Z"
