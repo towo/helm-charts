@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := include "grocy.fullname" . -}}
+{{- $frontendName := include "grocy.frontendName" . -}}
 {{- $httpPort := .Values.service.port -}}
 {{- if .Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" -}}
 apiVersion: networking.k8s.io/v1
@@ -10,7 +10,7 @@ apiVersion: extensions/v1beta1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ $fullName }}
+  name: {{ include "grocy.fullname" . }}
   labels:
     {{- include "grocy.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
@@ -43,11 +43,11 @@ spec:
             backend:
             {{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
               service:
-                name: {{ include "grocy.frontendName" . }}
+                name: {{ $frontendName }}
                 port:
                   number: {{ $httpPort }}
             {{- else }}
-              serviceName: {{ include "grocy.frontendName" . }}
+              serviceName: {{ $frontendName }}
               servicePort: {{ $httpPort }}
             {{- end }}
   {{- end }}
