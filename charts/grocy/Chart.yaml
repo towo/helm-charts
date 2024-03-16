@@ -1,9 +1,9 @@
 ---
 apiVersion: v2
-appVersion: 3.3.2
+appVersion: 4.2.0
 description: ERP beyond your fridge - grocy is a web-based self-hosted groceries & household management solution for your home
 name: grocy
-version: 0.0.6
+version: 0.1.0
 kubeVersion: ">=1.16.0-0"
 keywords:
   - grocy
