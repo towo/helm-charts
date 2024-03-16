@@ -43,11 +43,11 @@ spec:
             backend:
             {{- if $.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress" }}
               service:
-                name: {{ $fullName }}
+                name: {{ .grocy.frontendName }}
                 port:
                   number: {{ $httpPort }}
             {{- else }}
-              serviceName: {{ $fullName }}
+              serviceName: {{ .grocy.frontendName }}
               servicePort: {{ $httpPort }}
             {{- end }}
   {{- end }}
